@@ -1,17 +1,29 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 function App() {
+  const [user, setUser] = useState(null);
+
   useEffect(() => {
-    if (window.Telegram.WebApp) {
+    if (window.Telegram && window.Telegram.WebApp) {
       const tg = window.Telegram.WebApp;
-      tg.ready();
-      console.log('User:', tg.initDataUnsafe?.user);
-      tg.MainButton.setText('Продолжить');
-      tg.MainButton.show();
+      tg.ready(); // инициализация
+      tg.expand(); // разворачиваем на весь экран
+      setUser(tg.initDataUnsafe.user); // получаем данные пользователя
     }
   }, []);
 
-  return <h1>Привет из мини-приложения!</h1>;
+  return (
+    <div style={{ padding: 20 }}>
+      <h1>Telegram Mini App</h1>
+      {user ? (
+        <p>
+          Привет, {user.first_name} {user.last_name} (@{user.username})
+        </p>
+      ) : (
+        <p>Загрузка...</p>
+      )}
+    </div>
+  );
 }
 
 export default App;
