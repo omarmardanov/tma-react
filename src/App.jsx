@@ -1,21 +1,17 @@
-import { useEffect } from 'react'
+import { useEffect } from 'react';
 
 function App() {
   useEffect(() => {
     if (window.Telegram.WebApp) {
-      const tg = window.Telegram.WebApp
-      tg.ready()
-      tg.expand()
-      console.log('Telegram WebApp initialized')
+      const tg = window.Telegram.WebApp;
+      tg.ready();
+      console.log('User:', tg.initDataUnsafe?.user);
+      tg.MainButton.setText('Продолжить');
+      tg.MainButton.show();
     }
-  }, [])
+  }, []);
 
-  return (
-    <div>
-      <h1>Hello Telegram</h1>
-      <p>Мини-приложение загружено внутри Telegram!</p>
-    </div>
-  )
+  return <h1>Привет из мини-приложения!</h1>;
 }
 
-export default App
+export default App;
